@@ -17,6 +17,7 @@
 //    // URL of the simulated electricity integration API.
 //    private static final String SIMULATION_API_URL = "http://localhost:8080/api/simulate/electricity";
 //
+//    @Autowired
 //    public ElectricityIntegrationScheduler(ElectricityService electricityService, RestTemplate restTemplate) {
 //        this.electricityService = electricityService;
 //        this.restTemplate = restTemplate;

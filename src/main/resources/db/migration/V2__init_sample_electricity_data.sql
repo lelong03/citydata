@@ -1,7 +1,44 @@
--- V2__init_sample_electricity_data.sql
--- Insert sample data for electricity table for 10 days
--- We assume the sample period is from 2025-02-01 to 2025-02-10.
--- For each day, we insert three rows with different energy sources and districts.
+INSERT INTO water_supply (source, consumption, ph, turbidity, status, ts) VALUES
+('Reservoir', 1150.0, 7.1, 3.2, 'Normal', '2025-02-01 08:00:00'),
+('River', 980.0, 6.9, 3.8, 'Normal', '2025-02-01 09:15:00'),
+('Groundwater', 1300.0, 7.3, 2.9, 'Normal', '2025-02-01 10:30:00'),
+
+('Reservoir', 1200.0, 7.0, 3.1, 'Normal', '2025-02-02 08:05:00'),
+('River', 850.0, 6.8, 4.0, 'Leak', '2025-02-02 10:45:00'),
+('Groundwater', 1400.0, 7.4, 3.0, 'Maintenance', '2025-02-02 11:30:00'),
+
+('Reservoir', 950.0, 7.2, 3.3, 'Normal', '2025-02-03 09:00:00'),
+('River', 1020.0, 6.7, 3.9, 'Normal', '2025-02-03 10:00:00'),
+('Groundwater', 1250.0, 7.1, 2.8, 'Normal', '2025-02-03 11:15:00'),
+
+('Reservoir', 1100.0, 7.0, 3.0, 'Normal', '2025-02-04 08:30:00'),
+('River', 920.0, 6.9, 4.2, 'Normal', '2025-02-04 09:45:00'),
+('Groundwater', 1350.0, 7.3, 3.1, 'Normal', '2025-02-04 10:50:00'),
+
+('Reservoir', 1180.0, 7.1, 3.4, 'Normal', '2025-02-05 08:10:00'),
+('River', 1050.0, 6.8, 3.7, 'Leak', '2025-02-05 10:30:00'),
+('Groundwater', 1420.0, 7.5, 3.0, 'Normal', '2025-02-05 11:40:00'),
+
+('Reservoir', 1250.0, 7.2, 3.3, 'Normal', '2025-02-06 08:20:00'),
+('River', 990.0, 6.8, 4.1, 'Normal', '2025-02-06 09:50:00'),
+('Groundwater', 1380.0, 7.4, 3.2, 'Maintenance', '2025-02-06 11:00:00'),
+
+('Reservoir', 1120.0, 7.0, 3.1, 'Normal', '2025-02-07 08:15:00'),
+('River', 970.0, 6.9, 4.0, 'Normal', '2025-02-07 10:00:00'),
+('Groundwater', 1300.0, 7.3, 2.9, 'Normal', '2025-02-07 11:20:00'),
+
+('Reservoir', 1190.0, 7.1, 3.2, 'Normal', '2025-02-08 08:00:00'),
+('River', 1010.0, 6.8, 3.8, 'Normal', '2025-02-08 09:30:00'),
+('Groundwater', 1370.0, 7.4, 3.0, 'Normal', '2025-02-08 11:00:00'),
+
+('Reservoir', 1150.0, 7.2, 3.3, 'Normal', '2025-02-09 08:10:00'),
+('River', 950.0, 6.8, 4.1, 'Normal', '2025-02-09 09:45:00'),
+('Groundwater', 1320.0, 7.3, 2.9, 'Normal', '2025-02-09 10:50:00'),
+
+('Reservoir', 1170.0, 7.0, 3.0, 'Normal', '2025-02-10 08:05:00'),
+('River', 990.0, 6.9, 4.0, 'Leak', '2025-02-10 10:20:00'),
+('Groundwater', 1390.0, 7.4, 3.1, 'Normal', '2025-02-10 11:30:00');
+
 
 INSERT INTO electricity (source, district, consumption, peak, status, outage_ts, outage_dur, outage_area, ts) VALUES
 -- Day 1: 2025-02-01

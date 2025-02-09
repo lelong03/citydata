@@ -33,5 +33,10 @@ public class ElectricityService {
     public Electricity findById(Long id) {
         return repository.findById(id).orElse(null);
     }
+
+    @Transactional
+    public List<Electricity> createAll(List<Electricity> electricityList) {
+        return repository.saveAll(electricityList);
+    }
 }
 

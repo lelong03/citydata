@@ -1,9 +1,12 @@
 package com.sap.citydata.scheduler;
 
+import com.sap.citydata.config.RabbitMQConfig;
 import com.sap.citydata.model.Electricity;
 import com.sap.citydata.service.ElectricityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +21,17 @@ public class ElectricityBatchIntegrationScheduler extends BaseIntegrationSchedul
 
     private static final Logger log = LoggerFactory.getLogger(ElectricityBatchIntegrationScheduler.class);
 
-    private final ElectricityService electricityService;
     private final RestTemplate restTemplate;
+    private final AmqpTemplate amqpTemplate;
 
-    // Use the same simulation API for this example, or a different one if needed.
+    // Use the simulation API that returns a list of Electricity records.
     private static final String SIMULATION_API_URL = "http://localhost:8080/api/simulate/electricity/batch";
 
-    public ElectricityBatchIntegrationScheduler(ElectricityService electricityService, RestTemplate restTemplate) {
-        this.electricityService = electricityService;
+    @Autowired
+    public ElectricityBatchIntegrationScheduler(RestTemplate restTemplate,
+                                                AmqpTemplate amqpTemplate) {
         this.restTemplate = restTemplate;
+        this.amqpTemplate = amqpTemplate;
     }
 
     /**
@@ -39,6 +44,7 @@ public class ElectricityBatchIntegrationScheduler extends BaseIntegrationSchedul
 
     @Override
     protected void fetchDataFromSource() {
+        // Fetch a batch (list) of electricity records from the simulation API.
         ResponseEntity<List<Electricity>> response = restTemplate.exchange(
                 SIMULATION_API_URL,
                 HttpMethod.GET,
@@ -47,12 +53,13 @@ public class ElectricityBatchIntegrationScheduler extends BaseIntegrationSchedul
         );
         List<Electricity> electricityList = response.getBody();
         if (electricityList != null && !electricityList.isEmpty()) {
+            // Publish each record to the RabbitMQ queue.
             for (Electricity e : electricityList) {
-                electricityService.create(e);
+                amqpTemplate.convertAndSend(RabbitMQConfig.ELECTRICITY_QUEUE, e);
             }
-            log.info("Batch Integrated {} new electricity data records.", electricityList.size());
+            log.info("Published {} electricity data records to the queue.", electricityList.size());
         } else {
-            log.warn("No electricity data received from the batch simulation endpoint.");
+            log.warn("No electricity data received from the simulation endpoint.");
         }
     }
 }

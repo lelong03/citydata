@@ -3,6 +3,7 @@ package com.sap.citydata.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
