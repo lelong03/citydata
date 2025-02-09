@@ -124,6 +124,10 @@ Directly impacts public health and helps in monitoring the effectiveness of wate
 **3.	Water Efficiency & Loss Rate**: The percentage of water lost due to leakages or infrastructure inefficiencies.
 Provides insight into the operational efficiency and can indicate when maintenance is needed.
 
+<img width="1570" alt="Screenshot 2025-02-10 at 2 37 14 AM" src="https://github.com/user-attachments/assets/43571a30-971e-42ab-beec-92c4269aee9f" />
+<img width="1582" alt="Screenshot 2025-02-10 at 2 37 25 AM" src="https://github.com/user-attachments/assets/389872a3-8652-4f33-8bab-b18598c12b95" />
+
+
 ### Electricity Metrics
 
 **1.	Average Electricity Consumption**: The average electricity usage in kilowatt-hours (kWh), often segmented by district or area.
@@ -134,6 +138,9 @@ Helps to identify stress periods on the grid and plan for capacity improvements 
 
 **3.	Outage Metrics**: Frequency, duration, and affected areas of power outages.
 Indicates reliability and helps in prioritizing infrastructure upgrades.
+
+<img width="788" alt="Screenshot 2025-02-10 at 2 37 32 AM" src="https://github.com/user-attachments/assets/52da74f6-dffd-44e3-b60b-73587bd5af18" />
+
 
 ### Waste Management
 
