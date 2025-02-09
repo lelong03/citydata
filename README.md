@@ -199,3 +199,5 @@ Flyway automatically runs on startup to manage the database schema.
 **3. Access the Application:**
 - The CityData application will be available at http://localhost:8080, 
 - RabbitMQ management UI at http://localhost:15672.
+- API Upload for Waste: [POST] http://localhost:8080/api/waste/upload
+- API Input manually for Water Supply: [POST] http://localhost:8080/api/water
