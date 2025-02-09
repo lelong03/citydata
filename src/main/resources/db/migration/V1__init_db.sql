@@ -21,8 +21,7 @@ CREATE TABLE electricity (
     outage_ts TIMESTAMP NULL COMMENT 'Outage start timestamp',
     outage_dur INT NULL COMMENT 'Outage duration in minutes',
     outage_area VARCHAR(100) NULL COMMENT 'Affected areas during outage',
-    ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Reading timestamp',
-    partition_key INT AS (YEAR(ts)*10 + QUARTER(ts)) VIRTUAL
+    ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Reading timestamp'
 ) ENGINE=InnoDB;
 CREATE INDEX idx_elec_source ON electricity(source);
 CREATE INDEX idx_elec_district ON electricity(district);
