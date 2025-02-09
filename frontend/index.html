@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart City Metrics - Water Consumption Metrics</title>
+  <!-- Load Chart.js from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .chart-container {
+      display: inline-block;
+      width: 45%;
+      margin: 2%;
+      vertical-align: top;
+    }
+    .controls {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+<!-- Base URL Text Box -->
+<div class="controls">
+  <label for="baseUrl">Data Source URL:</label>
+  <input type="text" id="baseUrl" value="http://localhost:8080" size="30" disabled="disabled" />
+</div>
+<h1>Water Metrics</h1>
+
+<!-- Chart 1: Average Consumption by Source -->
+<div class="chart-container">
+  <h2>Average Consumption by Source</h2>
+  <div>
+    <label for="timeRangeSource">Time Range:</label>
+    <select id="timeRangeSource">
+      <option value="1day">1 Day</option>
+      <option value="1week" selected>1 Week</option>
+      <option value="1month">1 Month</option>
+    </select>
+  </div>
+  <canvas id="sourceChart" width="400" height="300"></canvas>
+</div>
+
+<!-- Chart 2: Daily Average Consumption -->
+<div class="chart-container">
+  <h2>Daily Average Consumption</h2>
+  <div>
+    <label for="timeRangeDay">Time Range:</label>
+    <select id="timeRangeDay">
+      <option value="1day">1 Day</option>
+      <option value="1week" selected>1 Week</option>
+      <option value="1month">1 Month</option>
+    </select>
+  </div>
+  <canvas id="dailyChart" width="400" height="300"></canvas>
+</div>
+
+<!-- Chart 3 : Daily Average Water Quality -->
+<div class="chart-container">
+  <h2>Daily Average Water Quality</h2>
+  <div>
+    <label for="timeRangeQuality">Time Range:</label>
+    <select id="timeRangeQuality">
+      <option value="1day">1 Day</option>
+      <option value="1week" selected>1 Week</option>
+      <option value="1month">1 Month</option>
+    </select>
+  </div>
+  <canvas id="qualityChart" width="400" height="300"></canvas>
+</div>
+
+<!-- Daily Water Loss Rate Metric -->
+<div class="chart-container">
+  <h2>Daily Water Loss Rate</h2>
+  <div>
+    <label for="timeRangeLoss">Time Range:</label>
+    <select id="timeRangeLoss">
+      <option value="1day">1 Day</option>
+      <option value="1week" selected>1 Week</option>
+      <option value="1month">1 Month</option>
+    </select>
+  </div>
+  <canvas id="lossChart" width="400" height="300"></canvas>
+</div>
+
+<h1>Electricity Metrics</h1>
+<!-- Electricity Consumption Filter Controls -->
+
+
+<!-- Chart Container for Electricity Consumption -->
+<div class="chart-container">
+  <h2>Electricity Consumption</h2>
+  <div class="controls">
+    <label for="elecStartDate">Start Date:</label>
+    <input type="date" id="elecStartDate" value="2025-02-01" />
+    <label for="elecEndDate">End Date:</label>
+    <input type="date" id="elecEndDate" value="" />
+    <!-- The end date input will default to today's date if empty on the backend -->
+    <button id="fetchElecBtn">Fetch Electricity Data</button>
+  </div>
+  <canvas id="electricityChart" width="800" height="400"></canvas>
+</div>
+
+<!-- Include custom JS -->
+<script src="js/main.js"></script>
+</body>
+</html>
