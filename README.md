@@ -155,7 +155,7 @@ Indicates reliability and helps in prioritizing infrastructure upgrades.
 <img width="788" alt="Screenshot 2025-02-10 at 2 37 32 AM" src="https://github.com/user-attachments/assets/52da74f6-dffd-44e3-b60b-73587bd5af18" />
 
 
-### Waste Management
+### Waste Metric
 
 **1.	Total Waste Collected**: The total weight (in tons) of waste collected over a specific period (day, week, etc.).
 Indicates the volume of waste that needs processing and informs logistical planning.
@@ -165,6 +165,9 @@ A key indicator of environmental performance and sustainability.
 
 **3.	Waste Collection Frequency**: How often waste is collected (e.g., daily or weekly).
 Reflects operational efficiency and can affect service quality and cost.
+
+<img width="413" alt="Screenshot 2025-02-10 at 11 30 36 PM" src="https://github.com/user-attachments/assets/64e1f2ac-1501-41af-9588-20d1020e24d5" />
+<img width="415" alt="Screenshot 2025-02-10 at 11 30 42 PM" src="https://github.com/user-attachments/assets/65f8b70e-f466-4f3d-bb98-aea6430e520c" />
 
 
 ## 6. Design Patterns
@@ -212,14 +215,21 @@ Flyway automatically runs on startup to manage the database schema.
 **3. Access the Application:**
 - The CityData application will be available at http://localhost:8080
 - RabbitMQ management UI at http://localhost:15672
-- API Upload for Waste: [POST] http://localhost:8080/api/waste/upload
+- **Waste**
+  - API Upload : [POST] http://localhost:8080/api/waste/upload
+  - CSV sample content:
+    ```
+    freq,segregation,facility,total,recycle,report_date
+    Daily,Organic,Normal,15.0,65.0,2025-02-09
+    Daily,Plastic,Normal,1.0,100,2025-02-09
+    ``` 
+    ![Screenshot 2025-02-10 at 8 44 24 AM](https://github.com/user-attachments/assets/1d6e0ae3-a953-484f-91ae-0e482ef9328f)
 
-  ![Screenshot 2025-02-10 at 8 44 24 AM](https://github.com/user-attachments/assets/1d6e0ae3-a953-484f-91ae-0e482ef9328f)
-
-- API Input manually for Water Supply: [POST] http://localhost:8080/api/water
+- **Water Supply**
+  - API for Input manually: [POST] http://localhost:8080/api/water
   
-  Sample request
-  ```json
+  - Sample request
+    ```json
     {
         "source": "River",
         "consumption": 980.0,
@@ -228,6 +238,11 @@ Flyway automatically runs on startup to manage the database schema.
         "status": "Normal",
         "ts": "2025-02-01T09:15:00.000+00:00"
     }
-  ```
+    ```
+- **Electricity**: for this MVP (4-6 hrs working)
+  - Integration type: pulling data from other source via API 
+  - Integration end-point (simulate): http://localhost:8080/api/simulate/electricity/batch
+  - Interval: every 10 seconds
+    
 **4. Visualization:**
   - Open: **frontend/index.html**
