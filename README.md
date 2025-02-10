@@ -2,6 +2,19 @@
 
 CityData MVP is a smart city data management system that demonstrates advanced architectural patterns, scalability, and performance techniques. The system manages data for three main models—Water Supply, Electricity, and Waste—using various input mechanisms and provides analytical dashboards via Chart.js. The application is containerized using Docker Compose, uses Flyway for database migrations, and is built with Spring Boot and MySQL.
 
+## 0. System Design (simple version)
+![CityData drawio](https://github.com/user-attachments/assets/48eb4fdd-9225-4d3c-94e0-2fab48dcbe1d)
+
+### Technical stack
+- Java 23
+- Spring boot 3.4.2 (Spring Data JPA: For Hibernate ORM, Spring Web: For our web application / rest api)
+- Mysql 8
+- RabbitMQ
+- Docker compose
+- Maven
+- Flyway: version control for database (for migration)
+- Chart.js: metric visualization
+
 ## 1. Data Models
 
 ### **Water Supply**
@@ -98,17 +111,17 @@ CREATE INDEX idx_waste_report_date ON waste(report_date);
 ```
 ## 4. Database Consideration
 
-We chose MySQL for this MVP because:
+We chose **MySQL** for this MVP because:
 
 - **Simplicity & Speed to MVP**: is essential given the 4–6 hour time frame.
 - **Sufficient for Data Models**: data for water supply, electricity, and waste management are mostly structured with a clear schema.
   When properly indexed, we can handle time-range queries and aggregations well enough.
 
 
-[LATER] Consider a Time-Series Database when:
-- High Ingestion Rates
-- Advanced Time-Series Queries
-- Long-Term Scalability
+**[Improvement]** Consider a Time-Series Database when:
+- **High Ingestion Rates**
+- **Realtime Queries**
+- **Long-Term Scalability**
 
 
 ## 5. Data Analysis and Visualization
@@ -197,7 +210,23 @@ docker-compose up
 Flyway automatically runs on startup to manage the database schema.
 
 **3. Access the Application:**
-- The CityData application will be available at http://localhost:8080, 
-- RabbitMQ management UI at http://localhost:15672.
+- The CityData application will be available at http://localhost:8080
+- RabbitMQ management UI at http://localhost:15672
 - API Upload for Waste: [POST] http://localhost:8080/api/waste/upload
+  ![Screenshot 2025-02-10 at 8 44 24 AM](https://github.com/user-attachments/assets/1d6e0ae3-a953-484f-91ae-0e482ef9328f)
+  
 - API Input manually for Water Supply: [POST] http://localhost:8080/api/water
+  
+  Sample request
+  ```json
+    {
+        "source": "River",
+        "consumption": 980.0,
+        "ph": 6.9,
+        "turbidity": 3.8,
+        "status": "Normal",
+        "ts": "2025-02-01T09:15:00.000+00:00"
+    }
+  ```
+  **4. Visualization:**
+  - Open: **frontend/index.html**
