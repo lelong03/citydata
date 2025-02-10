@@ -3,7 +3,7 @@
 CityData MVP is a smart city data management system that demonstrates advanced architectural patterns, scalability, and performance techniques. The system manages data for three main models—Water Supply, Electricity, and Waste—using various input mechanisms and provides analytical dashboards via Chart.js. The application is containerized using Docker Compose, uses Flyway for database migrations, and is built with Spring Boot and MySQL.
 
 ## 0. System Design (simple version)
-![CityData drawio](https://github.com/user-attachments/assets/48eb4fdd-9225-4d3c-94e0-2fab48dcbe1d)
+![CityData drawio (1)](https://github.com/user-attachments/assets/95e94bc8-33b1-4bb0-aa2b-93db01b1a99a)
 
 ### Technical stack
 - Java 23
