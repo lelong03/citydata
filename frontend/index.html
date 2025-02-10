@@ -2,18 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Smart City Metrics - Water Consumption Metrics</title>
+  <title>Smart City Metrics Dashboard</title>
   <!-- Load Chart.js from CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    .chart-container {
-      display: inline-block;
-      width: 45%;
-      margin: 2%;
-      vertical-align: top;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
     }
     .controls {
       margin-bottom: 10px;
+    }
+    /* Grid container to hold all chart containers */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    /* Chart container with fixed dimensions and hidden overflow */
+    .chart-container {
+      border: 1px solid #ccc;
+      padding: 10px;
+      box-sizing: border-box;
+      width: 400px;
+      height: 400px;
+      overflow: hidden;
+    }
+    .chart-container h2 {
+      margin: 0 0 10px;
+      font-size: 1.2em;
+      text-align: center;
+    }
+    /* Force canvas to fill the container without overflowing */
+    .chart-container canvas {
+      width: 100% !important;
+      height: calc(100% - 40px) !important;  /* subtract header and controls height */
+      display: block;
     }
   </style>
 </head>
@@ -23,80 +48,146 @@
   <label for="baseUrl">Data Source URL:</label>
   <input type="text" id="baseUrl" value="http://localhost:8080" size="30" disabled="disabled" />
 </div>
+
 <h1>Water Metrics</h1>
-
-<!-- Chart 1: Average Consumption by Source -->
-<div class="chart-container">
-  <h2>Average Consumption by Source</h2>
-  <div>
-    <label for="timeRangeSource">Time Range:</label>
-    <select id="timeRangeSource">
-      <option value="1day">1 Day</option>
-      <option value="1week" selected>1 Week</option>
-      <option value="1month">1 Month</option>
-    </select>
+<div class="grid-container">
+  <!-- Chart 1: Average Consumption by Source -->
+  <div class="chart-container">
+    <h2>Average Consumption by Source</h2>
+    <div class="controls">
+      <label for="timeRangeSource">Time Range:</label>
+      <select id="timeRangeSource">
+        <option value="1day">1 Day</option>
+        <option value="1week" selected>1 Week</option>
+        <option value="1month">1 Month</option>
+      </select>
+    </div>
+    <canvas id="sourceChart"></canvas>
   </div>
-  <canvas id="sourceChart" width="400" height="300"></canvas>
-</div>
 
-<!-- Chart 2: Daily Average Consumption -->
-<div class="chart-container">
-  <h2>Daily Average Consumption</h2>
-  <div>
-    <label for="timeRangeDay">Time Range:</label>
-    <select id="timeRangeDay">
-      <option value="1day">1 Day</option>
-      <option value="1week" selected>1 Week</option>
-      <option value="1month">1 Month</option>
-    </select>
+  <!-- Chart 2: Daily Average Consumption -->
+  <div class="chart-container">
+    <h2>Daily Average Consumption</h2>
+    <div class="controls">
+      <label for="timeRangeDay">Time Range:</label>
+      <select id="timeRangeDay">
+        <option value="1day">1 Day</option>
+        <option value="1week" selected>1 Week</option>
+        <option value="1month">1 Month</option>
+      </select>
+    </div>
+    <canvas id="dailyChart"></canvas>
   </div>
-  <canvas id="dailyChart" width="400" height="300"></canvas>
-</div>
 
-<!-- Chart 3 : Daily Average Water Quality -->
-<div class="chart-container">
-  <h2>Daily Average Water Quality</h2>
-  <div>
-    <label for="timeRangeQuality">Time Range:</label>
-    <select id="timeRangeQuality">
-      <option value="1day">1 Day</option>
-      <option value="1week" selected>1 Week</option>
-      <option value="1month">1 Month</option>
-    </select>
+  <!-- Chart 3: Daily Average Water Quality -->
+  <div class="chart-container">
+    <h2>Daily Average Water Quality</h2>
+    <div class="controls">
+      <label for="timeRangeQuality">Time Range:</label>
+      <select id="timeRangeQuality">
+        <option value="1day">1 Day</option>
+        <option value="1week" selected>1 Week</option>
+        <option value="1month">1 Month</option>
+      </select>
+    </div>
+    <canvas id="qualityChart"></canvas>
   </div>
-  <canvas id="qualityChart" width="400" height="300"></canvas>
-</div>
 
-<!-- Daily Water Loss Rate Metric -->
-<div class="chart-container">
-  <h2>Daily Water Loss Rate</h2>
-  <div>
-    <label for="timeRangeLoss">Time Range:</label>
-    <select id="timeRangeLoss">
-      <option value="1day">1 Day</option>
-      <option value="1week" selected>1 Week</option>
-      <option value="1month">1 Month</option>
-    </select>
+  <!-- Chart 4: Daily Water Loss Rate -->
+  <div class="chart-container">
+    <h2>Daily Water Loss Rate</h2>
+    <div class="controls">
+      <label for="timeRangeLoss">Time Range:</label>
+      <select id="timeRangeLoss">
+        <option value="1day">1 Day</option>
+        <option value="1week" selected>1 Week</option>
+        <option value="1month">1 Month</option>
+      </select>
+    </div>
+    <canvas id="lossChart"></canvas>
   </div>
-  <canvas id="lossChart" width="400" height="300"></canvas>
 </div>
 
 <h1>Electricity Metrics</h1>
-<!-- Electricity Consumption Filter Controls -->
-
-
-<!-- Chart Container for Electricity Consumption -->
-<div class="chart-container">
-  <h2>Electricity Consumption</h2>
-  <div class="controls">
-    <label for="elecStartDate">Start Date:</label>
-    <input type="date" id="elecStartDate" value="2025-02-01" />
-    <label for="elecEndDate">End Date:</label>
-    <input type="date" id="elecEndDate" value="" />
-    <!-- The end date input will default to today's date if empty on the backend -->
-    <button id="fetchElecBtn">Fetch Electricity Data</button>
+<div class="grid-container">
+  <!-- Chart 5: Electricity Consumption -->
+  <div class="chart-container">
+    <h2>Electricity Consumption</h2>
+    <div class="controls">
+      <label for="elecStartDate">Start Date:</label>
+      <input type="date" id="elecStartDate" value="2025-02-01" />
+      <label for="elecEndDate">End Date:</label>
+      <input type="date" id="elecEndDate" value="" />
+      <button id="fetchElecBtn">Fetch Electricity Data</button>
+    </div>
+    <canvas id="electricityChart"></canvas>
   </div>
-  <canvas id="electricityChart" width="800" height="400"></canvas>
+
+  <!-- Chart 6: Peak Load Analysis -->
+  <div class="chart-container">
+    <h2>Peak Load Analysis</h2>
+    <div class="controls">
+      <label for="timeRangePeak">Time Range:</label>
+      <select id="timeRangePeak">
+        <option value="1day">1 Day</option>
+        <option value="1week" selected>1 Week</option>
+        <option value="1month">1 Month</option>
+      </select>
+      <button id="fetchPeakBtn">Fetch Peak Load Data</button>
+    </div>
+    <canvas id="peakChart"></canvas>
+  </div>
+
+  <!-- Chart 7: Outage Metrics -->
+  <div class="chart-container">
+    <h2>Outage Metrics</h2>
+    <div class="controls">
+      <label for="timeRangeOutage">Time Range:</label>
+      <select id="timeRangeOutage">
+        <option value="1day">1 Day</option>
+        <option value="1week" selected>1 Week</option>
+        <option value="1month">1 Month</option>
+      </select>
+      <button id="fetchOutageBtn">Fetch Outage Data</button>
+    </div>
+    <canvas id="outageChart"></canvas>
+  </div>
+
+</div>
+
+<h1>Waste Metrics</h1>
+<div class="grid-container">
+
+  <!-- Chart 8: Recycling Rate Pie Chart -->
+  <div class="chart-container">
+    <h2>Recycling Rate</h2>
+    <div class="controls">
+      <label for="timeRangeRecycle">Time Range:</label>
+      <select id="timeRangeRecycle">
+        <option value="1day">1 Day</option>
+        <option value="1week" selected>1 Week</option>
+        <option value="1month">1 Month</option>
+      </select>
+      <button id="fetchRecycleBtn">Fetch Recycling Rate</button>
+    </div>
+    <canvas id="recyclingChart"></canvas>
+  </div>
+
+  <!-- Waste Metrics: Stacked Bar Chart for Total Waste Collected and Recycled Waste -->
+  <div class="chart-container">
+    <h2>Total Waste & Recycled Waste</h2>
+    <div class="controls">
+      <label for="timeRangeWaste">Time Range:</label>
+      <select id="timeRangeWaste">
+        <option value="1day">1 Day</option>
+        <option value="1week" selected>1 Week</option>
+        <option value="1month">1 Month</option>
+      </select>
+      <button id="fetchWasteBtn">Fetch Waste Data</button>
+    </div>
+    <canvas id="wasteChart"></canvas>
+  </div>
+
 </div>
 
 <!-- Include custom JS -->

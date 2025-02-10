@@ -201,3 +201,15 @@ Flyway automatically runs on startup to manage the database schema.
 - RabbitMQ management UI at http://localhost:15672.
 - API Upload for Waste: [POST] http://localhost:8080/api/waste/upload
 - API Input manually for Water Supply: [POST] http://localhost:8080/api/water
+  
+  Sample request
+  ```json
+    {
+        "source": "River",
+        "consumption": 980.0,
+        "ph": 6.9,
+        "turbidity": 3.8,
+        "status": "Normal",
+        "ts": "2025-02-01T09:15:00.000+00:00"
+    }
+  ```

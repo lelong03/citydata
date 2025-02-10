@@ -21,4 +21,39 @@ public interface ElectricityRepository extends JpaRepository<Electricity, Long> 
         String getDistrict();
         Double getAvgConsumption();
     }
+
+    // Query for Peak Load Analysis: group by peak period
+    @Query("SELECT e.peak AS peak, " +
+            "AVG(e.consumption) AS avgConsumption, " +
+            "MAX(e.consumption) AS maxConsumption, " +
+            "SUM(e.consumption) AS totalConsumption " +
+            "FROM Electricity e " +
+            "WHERE e.ts >= :startTime " +
+            "GROUP BY e.peak " +
+            "ORDER BY totalConsumption DESC")
+    List<PeakLoadProjection> findPeakLoadAnalysis(@Param("startTime") Timestamp startTime);
+
+    interface PeakLoadProjection {
+        String getPeak();
+        Double getAvgConsumption();
+        Double getMaxConsumption();
+        Double getTotalConsumption();
+    }
+
+    @Query("SELECT DATE(e.outageTs) AS outageDate, " +
+            "COUNT(e) AS outageFrequency, " +
+            "AVG(e.outageDur) AS avgOutageDuration, " +
+            "SUM(e.outageDur) AS totalOutageDuration " +
+            "FROM Electricity e " +
+            "WHERE e.outageTs IS NOT NULL AND e.ts >= :startTime " +
+            "GROUP BY DATE(e.outageTs) " +
+            "ORDER BY outageDate ASC")
+    List<OutageMetricsProjection> findOutageMetrics(@Param("startTime") Timestamp startTime);
+
+    interface OutageMetricsProjection {
+        java.sql.Date getOutageDate();
+        Long getOutageFrequency();
+        Double getAvgOutageDuration();
+        Double getTotalOutageDuration();
+    }
 }

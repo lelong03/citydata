@@ -1,6 +1,10 @@
 package com.sap.citydata.controller;
 
 import com.sap.citydata.dto.electricity.ElectricityConsumptionResponse;
+import com.sap.citydata.dto.electricity.OutageMetricsResponse;
+import com.sap.citydata.dto.electricity.PeakLoadAnalysisResponse;
+import com.sap.citydata.dto.waste.RecyclingRateResponse;
+import com.sap.citydata.dto.waste.WasteMetricsResponse;
 import com.sap.citydata.dto.water.AvgWaterConsumptionResponse;
 import com.sap.citydata.dto.water.DailyConsumptionResponse;
 import com.sap.citydata.dto.water.DailyWaterLossResponse;
@@ -60,4 +64,34 @@ public class MetricsController {
         List<ElectricityConsumptionResponse> responses = metricsService.getAverageElectricityConsumption(startDate, endDate);
         return ResponseEntity.ok(responses);
     }
+
+    // Endpoint for Peak Load Analysis
+    @GetMapping("/peak_load_analysis")
+    public ResponseEntity<List<PeakLoadAnalysisResponse>> getPeakLoadAnalysis(
+            @RequestParam(value = "range", required = false, defaultValue = "1week") String range) {
+        List<PeakLoadAnalysisResponse> responses = metricsService.getPeakLoadAnalysis(range);
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/outage_metrics")
+    public ResponseEntity<List<OutageMetricsResponse>> getOutageMetrics(
+            @RequestParam(value = "range", required = false, defaultValue = "1week") String range) {
+        List<OutageMetricsResponse> responses = metricsService.getOutageMetrics(range);
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/recycling_rate")
+    public ResponseEntity<RecyclingRateResponse> getRecyclingRate(
+            @RequestParam(value = "range", required = false, defaultValue = "1week") String range) {
+        RecyclingRateResponse response = metricsService.getRecyclingRate(range);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/waste_metrics")
+    public ResponseEntity<List<WasteMetricsResponse>> getWasteMetrics(
+            @RequestParam(value = "range", required = false, defaultValue = "1week") String range) {
+        List<WasteMetricsResponse> responses = metricsService.getWasteMetrics(range);
+        return ResponseEntity.ok(responses);
+    }
+
 }
