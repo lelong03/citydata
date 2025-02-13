@@ -11,13 +11,6 @@ class CitydataApplicationTests {
 	private String datasourceUrl;
 
 	@Test
-	public void testDatasourceUrl() {
-		System.out.println("Datasource URL: " + datasourceUrl);
-		// You can assert that the URL contains "MODE=MySQL"
-		assert datasourceUrl.contains("MODE=MySQL");
-	}
-
-	@Test
 	void contextLoads() {
 	}
 

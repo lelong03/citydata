@@ -40,13 +40,13 @@ public interface ElectricityRepository extends JpaRepository<Electricity, Long> 
         Double getTotalConsumption();
     }
 
-    @Query("SELECT DATE(e.outageTs) AS outageDate, " +
+    @Query("SELECT CAST(e.outageTs AS date) AS outageDate, " +
             "COUNT(e) AS outageFrequency, " +
             "AVG(e.outageDur) AS avgOutageDuration, " +
             "SUM(e.outageDur) AS totalOutageDuration " +
             "FROM Electricity e " +
             "WHERE e.outageTs IS NOT NULL AND e.ts >= :startTime " +
-            "GROUP BY DATE(e.outageTs) " +
+            "GROUP BY CAST(e.outageTs AS date) " +
             "ORDER BY outageDate ASC")
     List<OutageMetricsProjection> findOutageMetrics(@Param("startTime") Timestamp startTime);
 
