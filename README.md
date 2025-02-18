@@ -7,8 +7,8 @@ CityData MVP is a smart city data management system that demonstrates advanced a
 
 ### Technical stack
 - Java 23
-- Spring boot 3.4.2 (Spring Data JPA: For Hibernate ORM, Spring Web: For our web application / rest api)
-- Mysql 8
+- Spring boot 3.4.2 (Spring Data JPA: For Hibernate ORM, Spring Web: For our web application / Rest API)
+- Mysql 8 (Replica model, WRITE on master nodes, and READ on slave nodes)
 - RabbitMQ
 - Docker compose
 - Maven

@@ -1,17 +1,39 @@
 version: '3.8'
 services:
-  mysql:
+  mysql-master:
     image: mysql:8.0.33
-    container_name: mysql
-    restart: always
+    container_name: mysql-master
+    command: --server-id=1 --log-bin=mysql-bin --binlog-format=row
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: Password@54321
       MYSQL_DATABASE: smartcitydb
+      MYSQL_USER: replication_user
+      MYSQL_PASSWORD: Password@54321
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
-      - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./replica_cfg/master/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  mysql-slave:
+    image: mysql:8.0.33
+    container_name: mysql-slave
+    depends_on:
+      - mysql-master
+    command: --server-id=2 --log-bin=mysql-bin --binlog-format=row
+    environment:
+      MYSQL_ROOT_PASSWORD: Password@54321
+      MYSQL_DATABASE: smartcitydb
+      MYSQL_USER: replication_user
+      MYSQL_PASSWORD: Password@54321
+    ports:
+      - "3307:3306"
+    volumes:
+      # Optionally, if you need additional static init, mount init.sql.
+      - ./replica_cfg/slave/init.sql:/docker-entrypoint-initdb.d/init.sql
+      # Mount our custom entrypoint script into the container.
+      - ./replica_cfg/slave/entrypoint.sh:/usr/local/bin/replicate.sh
+    entrypoint: [ "/bin/bash", "/usr/local/bin/replicate.sh" ]
+
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -21,5 +43,7 @@ services:
       - "15672:15672"  # Management UI
     restart: always
 
-volumes:
-  mysql_data:
+#volumes:
+#  mysql_data:
+#  master-data:
+#  slave-data:
